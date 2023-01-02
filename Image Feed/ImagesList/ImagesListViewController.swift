@@ -30,8 +30,6 @@ extension ImagesListViewController: UITableViewDataSource {
         guard let imageListCell = cell as? ImagesListCell else {
             return UITableViewCell()
         }
-        imageListCell.selectionStyle = .gray
-
         configCell(for: imageListCell, with: indexPath)
 
         return imageListCell
@@ -50,12 +48,13 @@ extension ImagesListViewController {
         default:
             cell.tableLike.imageView?.image = UIImage(named: "like_button_off")
         }
-        }
     }
+}
 
 
 extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
