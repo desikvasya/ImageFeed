@@ -19,6 +19,10 @@ class ImagesListViewController: UIViewController {
     }()
 }
 
+class ProfileViewController {
+    
+}
+
 extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return photosName.count
