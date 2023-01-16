@@ -1,14 +1,26 @@
 import UIKit
 
 class ImagesListViewController: UIViewController {
+    private let showSingleImageSegueIndetifier = "ShowSingleImage"
+
     @IBOutlet private var tableView: UITableView!
     
     private let photosName: [String] = Array(0...20).map{"\($0)"}
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == showSingleImageSegueIndetifier {
+            let viewController = segue.destination as! SingleImageViewController
+            let indexPath = sender as! IndexPath
+            let image = UIImage(named: photosName[indexPath.row])
+            viewController.image = image
+        } else {
+            super.prepare(for: segue, sender: sender)
+        }
     }
 
     private lazy var dateFormatter: DateFormatter = {
@@ -39,21 +51,20 @@ extension ImagesListViewController: UITableViewDataSource {
 extension ImagesListViewController {
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         guard let image: UIImage = UIImage(named: String(indexPath.row)) else {
-            return}
+            return
+        }
         cell.tableImage.image = image
         cell.tableDate.text = dateFormatter.string(from: Date())
-        switch (indexPath.row%2) {
-        case 0 : cell.tableLike.imageView?.image = UIImage(named: "like_button_on")
-        case 1 : cell.tableLike.imageView?.image = UIImage(named: "like_button_off")
-        default:
-            cell.tableLike.imageView?.image = UIImage(named: "like_button_off")
+        
+        let isLiked = indexPath.row%2 == 0
+        _ = isLiked ? UIImage(named: "like_button_on") : UIImage(named: "like_button_off")
+        cell.tableLike.imageView?.image = UIImage(named: "like_button_off")
         }
     }
-}
-
 
 extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: showSingleImageSegueIndetifier, sender: indexPath)
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
@@ -67,5 +78,4 @@ extension ImagesListViewController: UITableViewDelegate {
         let cellHeight = image.size.height * scale + imageInSets.top + imageInSets.bottom
         return cellHeight
     }
-    
 }

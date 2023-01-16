@@ -20,7 +20,8 @@ class ProfileViewController: UIViewController {
     
     @IBOutlet weak var logoutButton: UIButton!
     
-    @IBAction func didTapLogoutButton() {
+    @IBAction func didTapLogoutButton(_ sender: Any) {
     }
+    
     
 }

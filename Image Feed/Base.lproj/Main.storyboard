@@ -87,7 +87,6 @@
                                             <outlet property="tableDate" destination="zZ7-qv-kLf" id="dgR-nY-zr3"/>
                                             <outlet property="tableImage" destination="UHT-CC-7rY" id="OLL-c5-Zkf"/>
                                             <outlet property="tableLike" destination="sdE-8c-JJO" id="Rs9-aR-bYZ"/>
-                                            <segue destination="m0B-DO-G5k" kind="show" id="K14-2I-Bba"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -109,11 +108,12 @@
                     <navigationItem key="navigationItem" id="kUg-Nu-zd6"/>
                     <connections>
                         <outlet property="tableView" destination="0ZD-Gs-GgP" id="Fuw-16-5ad"/>
+                        <segue destination="m0B-DO-G5k" kind="presentation" identifier="ShowSingleImage" id="9WL-zx-2z1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="112.21374045801527" y="-706.33802816901414"/>
+            <point key="canvasLocation" x="112" y="-706"/>
         </scene>
         <!--ProfileView-->
         <scene sceneID="7t6-JV-Viz">
@@ -153,7 +153,7 @@
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title=" " image="ipad.and.arrow.forward"/>
                                 <connections>
-                                    <action selector="didTapLogoutButton:" destination="cmZ-JI-wQ4" eventType="touchUpInside" id="QpP-bM-Da4"/>
+                                    <action selector="didTapLogoutButton:" destination="cmZ-JI-wQ4" eventType="touchUpInside" id="Qhs-WA-MMj"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello, world !" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nWH-fP-pKa" userLabel="Description Label">
@@ -189,38 +189,52 @@
                         <outlet property="avatarImageView" destination="Xh2-Uv-hDb" id="W8k-ZL-PFm"/>
                         <outlet property="descriptionLabel" destination="nWH-fP-pKa" id="sCc-UM-3wi"/>
                         <outlet property="loginNameLabel" destination="nWH-fP-pKa" id="VUX-nH-psc"/>
-                        <outlet property="logoutButton" destination="DgJ-bG-70p" id="nBL-uj-h9M"/>
+                        <outlet property="logoutButton" destination="DgJ-bG-70p" id="PkI-5O-hk4"/>
                         <outlet property="nameLabel" destination="dSz-eZ-MZu" id="hYN-gQ-Yrf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aEM-K0-Jy9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-815" y="-4"/>
+            <point key="canvasLocation" x="-816.03053435114498" y="-4.2253521126760569"/>
         </scene>
         <!--Single Image View Contoller-->
         <scene sceneID="atI-0R-ldh">
             <objects>
-                <viewController id="m0B-DO-G5k" userLabel="Single Image View Contoller" customClass="SingleImageViewController" customModule="Image_Feed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="m0B-DO-G5k" userLabel="Single Image View Contoller" customClass="SingleImageViewController" customModule="Image_Feed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="K6q-5e-rnV">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="XnA-86-JaC" userLabel="ImageView">
-                                <rect key="frame" x="0.0" y="103" width="393" height="666"/>
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vrf-q0-b8P">
+                                <rect key="frame" x="31" y="60" width="45" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="chevron.backward" catalog="system" title=" "/>
+                                <connections>
+                                    <action selector="didTapBackButton:" destination="m0B-DO-G5k" eventType="touchUpInside" id="YdS-5H-V8i"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="hc8-Gt-ZKD"/>
                         <color key="backgroundColor" red="0.13333332540000001" green="0.1411764771" blue="0.1725490093" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
-                            <constraint firstItem="hc8-Gt-ZKD" firstAttribute="bottom" secondItem="XnA-86-JaC" secondAttribute="bottom" id="bL0-g6-Sl0"/>
-                            <constraint firstItem="hc8-Gt-ZKD" firstAttribute="trailing" secondItem="XnA-86-JaC" secondAttribute="trailing" id="d6v-Nd-7pe"/>
-                            <constraint firstItem="XnA-86-JaC" firstAttribute="leading" secondItem="hc8-Gt-ZKD" secondAttribute="leading" id="rzr-UD-z0W"/>
-                            <constraint firstItem="XnA-86-JaC" firstAttribute="top" secondItem="hc8-Gt-ZKD" secondAttribute="top" id="tlZ-ll-gJQ"/>
+                            <constraint firstItem="vrf-q0-b8P" firstAttribute="top" secondItem="hc8-Gt-ZKD" secondAttribute="top" constant="1" id="8HL-60-Zpr"/>
+                            <constraint firstItem="vrf-q0-b8P" firstAttribute="leading" secondItem="hc8-Gt-ZKD" secondAttribute="leading" constant="31" id="YXf-6u-BXi"/>
+                            <constraint firstItem="vrf-q0-b8P" firstAttribute="leading" secondItem="hc8-Gt-ZKD" secondAttribute="leading" constant="8" id="YmE-Zs-2es"/>
+                            <constraint firstItem="hc8-Gt-ZKD" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="vrf-q0-b8P" secondAttribute="trailing" symbolic="YES" id="bAq-wG-m1h"/>
+                            <constraint firstAttribute="bottom" secondItem="XnA-86-JaC" secondAttribute="bottom" id="bL0-g6-Sl0"/>
+                            <constraint firstItem="vrf-q0-b8P" firstAttribute="top" secondItem="hc8-Gt-ZKD" secondAttribute="top" constant="4" id="bpN-TT-ZeR"/>
+                            <constraint firstAttribute="trailing" secondItem="XnA-86-JaC" secondAttribute="trailing" id="d6v-Nd-7pe"/>
+                            <constraint firstItem="XnA-86-JaC" firstAttribute="leading" secondItem="K6q-5e-rnV" secondAttribute="leading" id="rzr-UD-z0W"/>
+                            <constraint firstItem="XnA-86-JaC" firstAttribute="top" secondItem="K6q-5e-rnV" secondAttribute="top" id="tlZ-ll-gJQ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="uPQ-kv-Aw7"/>
                     <connections>
-                        <outlet property="imageView" destination="K6q-5e-rnV" id="f2s-L2-s2O"/>
+                        <outlet property="backButton" destination="vrf-q0-b8P" id="bVP-YB-5Ah"/>
+                        <outlet property="imageView" destination="XnA-86-JaC" id="xdS-R6-bI4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tN0-dm-7j9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -254,6 +268,7 @@
     </scenes>
     <resources>
         <image name="0" width="200" height="132"/>
+        <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <image name="ipad.and.arrow.forward" width="20" height="22"/>
         <image name="like_button_on" width="42" height="42"/>
         <image name="tab_main_nonactive" width="30" height="30"/>
