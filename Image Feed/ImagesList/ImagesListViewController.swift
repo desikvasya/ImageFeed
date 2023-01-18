@@ -50,17 +50,18 @@ extension ImagesListViewController: UITableViewDataSource {
 
 extension ImagesListViewController {
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
-        guard let image: UIImage = UIImage(named: String(indexPath.row)) else {
+        guard let image = UIImage(named: photosName[indexPath.row]) else {
             return
         }
+
         cell.tableImage.image = image
         cell.tableDate.text = dateFormatter.string(from: Date())
-        
-        let isLiked = indexPath.row%2 == 0
-        _ = isLiked ? UIImage(named: "like_button_on") : UIImage(named: "like_button_off")
-        cell.tableLike.imageView?.image = UIImage(named: "like_button_off")
-        }
+
+        let isLiked = indexPath.row % 2 == 0
+        let likeImage = isLiked ? UIImage(named: "like_button_on") : UIImage(named: "like_button_off")
+        cell.tableLike.setImage(likeImage, for: .normal)
     }
+}
 
 extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
