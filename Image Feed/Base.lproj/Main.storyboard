@@ -292,7 +292,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kzZ-Ie-9SQ">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="905"/>
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -300,10 +300,10 @@
                                 </wkWebViewConfiguration>
                             </wkWebView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nll-V1-QQc" userLabel="backButton">
-                                <rect key="frame" x="9" y="114" width="24" height="24"/>
+                                <rect key="frame" x="0.0" y="59" width="64" height="44"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="24" id="gR1-E9-qyy"/>
-                                    <constraint firstAttribute="width" constant="24" id="z9e-ne-RTv"/>
+                                    <constraint firstAttribute="height" constant="44" id="gR1-E9-qyy"/>
+                                    <constraint firstAttribute="width" constant="64" id="z9e-ne-RTv"/>
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title=" " image="Backward"/>
@@ -311,21 +311,27 @@
                                     <action selector="didTapBackButton:" destination="87C-Rv-6bv" eventType="touchUpInside" id="8uA-5h-ZkN"/>
                                 </connections>
                             </button>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="hfY-5r-ZCt">
+                                <rect key="frame" x="0.0" y="99" width="393" height="4"/>
+                                <color key="progressTintColor" red="0.1019607843" green="0.1058823529" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
+                            </progressView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="UTb-Iw-dwb"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="UTb-Iw-dwb" firstAttribute="trailing" secondItem="nll-V1-QQc" secondAttribute="trailing" constant="342" id="8I8-g2-55B"/>
                             <constraint firstItem="kzZ-Ie-9SQ" firstAttribute="top" secondItem="v7Z-F4-RYV" secondAttribute="top" id="8LV-KU-71O"/>
+                            <constraint firstItem="hfY-5r-ZCt" firstAttribute="leading" secondItem="v7Z-F4-RYV" secondAttribute="leading" id="8vE-VH-9g9"/>
+                            <constraint firstAttribute="trailing" secondItem="hfY-5r-ZCt" secondAttribute="trailing" id="A9q-fk-G24"/>
+                            <constraint firstItem="nll-V1-QQc" firstAttribute="top" secondItem="UTb-Iw-dwb" secondAttribute="top" id="LoI-wk-clp"/>
                             <constraint firstAttribute="trailing" secondItem="kzZ-Ie-9SQ" secondAttribute="trailing" id="Qwj-2h-8QU"/>
+                            <constraint firstItem="hfY-5r-ZCt" firstAttribute="top" secondItem="UTb-Iw-dwb" secondAttribute="top" constant="40" id="SVj-Tp-tMk"/>
                             <constraint firstAttribute="bottom" secondItem="kzZ-Ie-9SQ" secondAttribute="bottom" id="Z6y-SQ-GwH"/>
-                            <constraint firstItem="nll-V1-QQc" firstAttribute="top" secondItem="UTb-Iw-dwb" secondAttribute="top" constant="55" id="b2o-3C-SGQ"/>
-                            <constraint firstItem="nll-V1-QQc" firstAttribute="leading" secondItem="UTb-Iw-dwb" secondAttribute="leading" constant="9" id="f1M-He-DIi"/>
-                            <constraint firstItem="UTb-Iw-dwb" firstAttribute="bottom" secondItem="nll-V1-QQc" secondAttribute="bottom" constant="733" id="g4F-GW-eqo"/>
+                            <constraint firstItem="nll-V1-QQc" firstAttribute="leading" secondItem="UTb-Iw-dwb" secondAttribute="leading" id="f1M-He-DIi"/>
                             <constraint firstItem="kzZ-Ie-9SQ" firstAttribute="leading" secondItem="v7Z-F4-RYV" secondAttribute="leading" id="r0t-HQ-YJ5"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="progressView" destination="hfY-5r-ZCt" id="ZFz-71-sJF"/>
                         <outlet property="webView" destination="kzZ-Ie-9SQ" id="VzW-EE-Ra9"/>
                     </connections>
                 </viewController>
