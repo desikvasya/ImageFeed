@@ -173,7 +173,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FNF-Y0-VLF" userLabel="ShareButton">
-                                <rect key="frame" x="156.66666666666666" y="754" width="79.666666666666657" height="64"/>
+                                <rect key="frame" x="156.66666666666666" y="754" width="80" height="64"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="share_button1" title=" "/>
                                 <connections>
@@ -263,7 +263,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zxt-bO-4he" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1002.2900763358779" y="-4.2253521126760569"/>
+            <point key="canvasLocation" x="-824" y="-1516"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="KAd-n1-kal">
@@ -281,7 +281,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xan-uQ-EOm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75.572519083969468" y="-4.2253521126760569"/>
+            <point key="canvasLocation" x="-1750" y="-1516"/>
         </scene>
         <!--Web View View Controller-->
         <scene sceneID="4Km-dy-oPP">
@@ -337,7 +337,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tDE-Ma-hLd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1943" y="-4"/>
+            <point key="canvasLocation" x="117" y="-1516"/>
         </scene>
     </scenes>
     <resources>
