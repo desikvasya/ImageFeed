@@ -14,7 +14,9 @@ final class OAuth2Service {
         return OAuth2TokenStorage().token }
         set {
             OAuth2TokenStorage().token = newValue
-        } }
+        }
+    }
+    
     func fetchOAuthToken( _ code: String,
                           completion: @escaping (Result<String, Error>) -> Void ){
         let request = authTokenRequest(code: code)
@@ -24,23 +26,28 @@ final class OAuth2Service {
                 let authToken = body.accessToken; self.authToken = authToken; completion(.success(authToken))
             case .failure(let error): completion(.failure(error))
             } }
-        task.resume() }
+        task.resume()
+    }
 }
+
 extension OAuth2Service { private func object(
     for request: URLRequest,
     completion: @escaping (Result<OAuthTokenResponseBody, Error>) -> Void ) -> URLSessionTask {
         let decoder = JSONDecoder()
         return urlSession.data(for: request) { (result: Result<Data, Error>) in
-            let response = result.flatMap { data -> Result<OAuthTokenResponseBody, Error> in Result { try decoder.decode(OAuthTokenResponseBody.self, from: data) }
+            let response = result.flatMap { data -> Result<OAuthTokenResponseBody, Error> in Result { try decoder.decode(OAuthTokenResponseBody.self, from: data)
             }
-            completion(response) }
+            }
+            completion(response)
+        }
     }
+    
     private func authTokenRequest(code: String) -> URLRequest {
         URLRequest.makeHTTPRequest(
             path: "/oauth/token"
-            + "?client_id=\(accessKey)"
-            + "&&client_secret=\(secretKey)"
-            + "&&redirect_uri=\(redirectUri)"
+            + "?client_id=\(Constants.accessKey)"
+            + "&&client_secret=\(Constants.secretKey)"
+            + "&&redirect_uri=\(Constants.redirectUri)"
             + "&&code=\(code)"
             + "&&grant_type=authorization_code", httpMethod: "POST",
             baseURL: URL(string: "https://unsplash.com")!
@@ -53,7 +60,6 @@ extension OAuth2Service { private func object(
             case createdAt = "created_at" }
     } }
 // MARK: - HTTP Request
-// Если в вашем в проекте уже объявлена переменная `DefaultBaseURL` (с тем же значением), // то строчку ниже можно удалить.
 fileprivate let DefaultBaseURL = URL(string: "https://api.unsplash.com")!
 extension URLRequest {
     static func makeHTTPRequest(
