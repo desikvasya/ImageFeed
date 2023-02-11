@@ -11,9 +11,9 @@
 		7D3DFB1628DDF696005A13F3 /* ImagesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D3DFB1428DDF696005A13F3 /* ImagesListViewController.swift */; };
 		7D9CFA4328DDEE7F00D971A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D9CFA4228DDEE7F00D971A7 /* AppDelegate.swift */; };
 		7D9CFA4528DDEE7F00D971A7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D9CFA4428DDEE7F00D971A7 /* SceneDelegate.swift */; };
-		7D9CFA4F28DDEE8000D971A7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D9CFA4D28DDEE8000D971A7 /* LaunchScreen.storyboard */; };
-		928EF9702995273F00B65FEC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 928EF96E2995273F00B65FEC /* Main.storyboard */; };
-		928EF9742995285900B65FEC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 928EF9732995285900B65FEC /* Assets.xcassets */; };
+		7D9CFA4F28DDEE8000D971A7 /* LaunchScreen.storyboard in Sources */ = {isa = PBXBuildFile; fileRef = 7D9CFA4D28DDEE8000D971A7 /* LaunchScreen.storyboard */; };
+		928EF9702995273F00B65FEC /* Main.storyboard in Sources */ = {isa = PBXBuildFile; fileRef = 928EF96E2995273F00B65FEC /* Main.storyboard */; };
+		928EF9742995285900B65FEC /* Assets.xcassets in Sources */ = {isa = PBXBuildFile; fileRef = 928EF9732995285900B65FEC /* Assets.xcassets */; };
 		92A0C6C92972AA5E00A1C191 /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A0C6C82972AA5E00A1C191 /* SingleImageViewController.swift */; };
 		92A10611296D86F4004488D0 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A10610296D86F4004488D0 /* ProfileViewController.swift */; };
 		92D6347A2982ACCA008BF657 /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D634792982ACCA008BF657 /* WebViewViewController.swift */; };
@@ -195,9 +195,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				928EF9702995273F00B65FEC /* Main.storyboard in Resources */,
-				928EF9742995285900B65FEC /* Assets.xcassets in Resources */,
-				7D9CFA4F28DDEE8000D971A7 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,7 +217,10 @@
 				92FFCFC6298F6B5B00F63B0C /* Oath2TokenStorage.swift in Sources */,
 				92D6347A2982ACCA008BF657 /* WebViewViewController.swift in Sources */,
 				92D6347C2982ACE4008BF657 /* AuthViewController.swift in Sources */,
+				928EF9702995273F00B65FEC /* Main.storyboard in Sources */,
 				7D3DFB1528DDF696005A13F3 /* ImagesListCell.swift in Sources */,
+				7D9CFA4F28DDEE8000D971A7 /* LaunchScreen.storyboard in Sources */,
+				928EF9742995285900B65FEC /* Assets.xcassets in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
