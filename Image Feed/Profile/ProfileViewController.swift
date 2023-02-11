@@ -13,7 +13,7 @@ class ProfileViewController: UIViewController {
     private let avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "userPhoto")
+        imageView.image = UIImage(named: "avatar")
         imageView.layer.cornerRadius = 35.0
         
         return imageView
@@ -46,10 +46,10 @@ class ProfileViewController: UIViewController {
         return label
     }()
     
-    private var logoutButton: UIButton = {
+    private lazy var logoutButton: UIButton = {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: "exit_button"), for: .normal)
+        button.setImage(UIImage(named: "logout_button"), for: .normal)
         button.addTarget(self, action: #selector(didTapLogoutButton), for: .touchUpInside)
         return button
     }()
