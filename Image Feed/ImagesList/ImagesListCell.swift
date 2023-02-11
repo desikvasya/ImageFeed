@@ -6,3 +6,4 @@ final class ImagesListCell: UITableViewCell {
     @IBOutlet weak var tableLike: UIButton!
     @IBOutlet weak var tableDate: UILabel!
 }
+
