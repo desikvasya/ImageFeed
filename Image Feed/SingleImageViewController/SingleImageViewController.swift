@@ -25,10 +25,10 @@ final class SingleImageViewController: UIViewController {
     }
     
     @IBOutlet weak var imageView: UIImageView!
-        
-    @IBOutlet weak var backButton: UIButton!
     
-    @IBAction func didTapBackButton(_ sender: Any) {
+    
+    @IBOutlet weak var backButton: UIButton!
+    @IBAction func didTapBackbutton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
