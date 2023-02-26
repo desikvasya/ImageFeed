@@ -9,6 +9,8 @@ import Foundation
 import UIKit
 
 class ProfileViewController: UIViewController {
+    private let profileService = ProfileService.shared
+
     
     private let avatarImageView: UIImageView = {
         let imageView = UIImageView()
@@ -58,6 +60,10 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         addSubViews()
         applyConstraints()
+        
+        if let profile = profileService.profile {
+            updateProfileDetails(profile: profile)
+        }
     }
     
     @objc func didTapLogoutButton() {
@@ -70,6 +76,12 @@ class ProfileViewController: UIViewController {
         view.addSubview(loginNameLabel)
         view.addSubview(descriptionLabel)
         view.addSubview(logoutButton)
+    }
+    
+    private func updateProfileDetails(profile: Profile) {
+        nameLabel.text = profile.name
+        loginNameLabel.text = profile.loginName
+        descriptionLabel.text = profile.bio
     }
     
     func applyConstraints() {
