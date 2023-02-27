@@ -12,17 +12,29 @@ final class SplashViewController: UIViewController {
     private let ShowAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
     
     private let oauth2Service = OAuth2Service.shared
-    private let profileService = ProfileService()
+    private let profileService = ProfileService.shared
+    private let profileImageService = ProfileImageService.shared
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if oauth2Service.authToken != nil {
-            switchToTabBarController()
+        if let token = oauth2Service.authToken {
+            DispatchQueue.main.async { [weak self] in
+                guard let self else { return }
+                self.fetchProfile(token)
+            }
         } else {
-            performSegue(withIdentifier: ShowAuthenticationScreenSegueIdentifier, sender: nil)
+            let authViewController = AuthViewController()
+            authViewController.delegate = self
+            authViewController.modalPresentationStyle = .fullScreen
+            DispatchQueue.main.async { [weak self] in
+                guard let self else { return }
+                UIBlockingProgressHUD.show()
+                self.present(authViewController, animated: true)
+            }
         }
     }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -77,5 +89,24 @@ extension SplashViewController: AuthViewControllerDelegate {
             }
         }
     }
-}
+    private func fetchProfile(_ token: String) {
+            profileService.fetchProfile(token) { [weak self] result in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let profile):
+                        self.profileImageService.fetchProfileImageURL(username: profile.username) { result in }
+                        self.switchToTabBarController()
+                        UIBlockingProgressHUD.dismiss()
+                    case .failure:
+//                        let alert = Alert(controller: self)
+//                        alert.showAlert()
+                        UIBlockingProgressHUD.dismiss()
+                        break
+                    }
+                }
+            }
+        }
+    }
+
 

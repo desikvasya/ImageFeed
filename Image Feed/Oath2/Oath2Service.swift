@@ -12,6 +12,7 @@ final class OAuth2Service {
     private let urlSession = URLSession.shared
     private var lastCode: String?
     private var task: URLSessionTask?
+  
     private (set) var authToken: String? { get {
         return OAuth2TokenStorage().token }
         set {
@@ -25,7 +26,7 @@ final class OAuth2Service {
         if lastCode == code { return }
         task?.cancel()
         lastCode = code
-        let request = authTokenRequest(code: code)
+        let request = makeRequest(code: code)
         let task = urlSession.objectTask(for: request) { [weak self] (result: Result<OAuthTokenResponseBody, Error>) in
             guard let self = self else { return }
             DispatchQueue.main.async {
@@ -47,8 +48,8 @@ final class OAuth2Service {
 }
 
     
-    private func authTokenRequest(code: String) -> URLRequest {
-        URLRequest.makeHTTPRequest(
+    private func makeRequest(code: String) -> URLRequest {
+        URLRequest.makeRequest(
             path: "/oauth/token"
             + "?client_id=\(Constants.accessKey)"
             + "&&client_secret=\(Constants.secretKey)"
@@ -60,7 +61,7 @@ final class OAuth2Service {
 // MARK: - HTTP Request
 fileprivate let DefaultBaseURL = URL(string: "https://api.unsplash.com")!
 extension URLRequest {
-    static func makeHTTPRequest(
+    static func makeRequest(
         path: String,
         httpMethod: String,
         baseURL: URL = DefaultBaseURL

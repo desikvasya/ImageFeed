@@ -27,12 +27,12 @@ final class ProfileService: ProfileServiceProtocol {
             tempProfile = newValue
         }
     }
-    
+
     func fetchProfile(_ token: String, completion: @escaping (Result<Profile, Error>) -> Void) {
         assert(Thread.isMainThread)
         lastTask?.cancel()
 
-        var request = URLRequest.makeHTTPRequest(path: "me", httpMethod: "GET")
+        var request = URLRequest.makeRequest(path: "me", httpMethod: "GET")
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
 
         let task = urlSession.objectTask(for: request) { [weak self] (result: Result<ProfileResult, Error>) in
@@ -52,3 +52,4 @@ final class ProfileService: ProfileServiceProtocol {
         self.lastTask = task
     }
 }
+

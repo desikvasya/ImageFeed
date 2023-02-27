@@ -10,6 +10,49 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     private let profileService = ProfileService.shared
+    private var profileImageServiceObserver: NSObjectProtocol?
+
+    
+    override init(nibName: String?, bundle: Bundle?) {
+            super.init(nibName: nibName, bundle: bundle)
+            addObserver()
+        }
+    
+    required init?(coder: NSCoder) {
+            super.init(coder: coder)
+            addObserver()
+        }
+    
+    deinit {
+            removeObserver()
+        }
+    
+    private func addObserver() {
+            NotificationCenter.default.addObserver(                 // 1
+                self,                                               // 2
+                selector: #selector(updateAvatar(notification:)),   // 3
+                name: ProfileImageService.didChangeNotification,    // 4
+                object: nil)                                        // 5
+        }
+       
+       private func removeObserver() {
+            NotificationCenter.default.removeObserver(              // 6
+                self,                                               // 7
+                name: ProfileImageService.didChangeNotification,    // 8
+                object: nil)                                        // 9
+        }
+       
+        @objc                                                       // 10
+        private func updateAvatar(notification: Notification) {     // 11
+            guard
+                isViewLoaded,                                       // 12
+                let userInfo = notification.userInfo,               // 13
+                let profileImageURL = userInfo["URL"] as? String,   // 14
+                let url = URL(string: profileImageURL)              // 15
+            else { return }
+            
+            // TODO [Sprint 11] Обновить аватар, используя Kingfisher
+        }
 
     
     private let avatarImageView: UIImageView = {
@@ -64,7 +107,13 @@ class ProfileViewController: UIViewController {
         if let profile = profileService.profile {
             updateProfileDetails(profile: profile)
         }
-    }
+       
+        if let avatarURL = ProfileImageService.shared.avatarURL,// 16
+                   let url = URL(string: avatarURL) {                   // 17
+                    // TODO [Sprint 11]  Обновить аватар, если нотификация
+                    // была опубликована до того, как мы подписались.
+                }
+            }
     
     @objc func didTapLogoutButton() {
         print("didTapLogoutButton")
@@ -83,6 +132,7 @@ class ProfileViewController: UIViewController {
         loginNameLabel.text = profile.loginName
         descriptionLabel.text = profile.bio
     }
+    
     
     func applyConstraints() {
         NSLayoutConstraint.activate([
