@@ -99,8 +99,8 @@ extension SplashViewController: AuthViewControllerDelegate {
                         self.switchToTabBarController()
                         UIBlockingProgressHUD.dismiss()
                     case .failure:
-//                        let alert = Alert(controller: self)
-//                        alert.showAlert()
+                        let alert = AlertPresenter(viewController: self)
+                        alert.showAlert()
                         UIBlockingProgressHUD.dismiss()
                         break
                     }

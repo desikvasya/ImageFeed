@@ -39,6 +39,14 @@ final class WebViewViewController: UIViewController {
             URLQueryItem(name: "scope", value: Constants.accessScope)
         ]
         
+        estimatedProgressObservation = webView.observe(
+                    \.estimatedProgress,
+                    options: [],
+                    changeHandler: { [weak self] _, _ in
+                        guard let self = self else { return }
+                        self.updateProgress()
+                    })
+        
         let url = urlComponents.url!
         
         let request = URLRequest(url: url)
@@ -78,16 +86,6 @@ extension WebViewViewController: WKNavigationDelegate {
 }
 
 extension WebViewViewController {
-    
-    override func viewDidAppear(_ animated: Bool) {
-        estimatedProgressObservation = webView.observe(
-                    \.estimatedProgress,
-                    options: [],
-                    changeHandler: { [weak self] _, _ in
-                        guard let self = self else { return }
-                        self.updateProgress()
-                    })
-            }
     
     private func updateProgress() {
         progressView.progress = Float(webView.estimatedProgress)
