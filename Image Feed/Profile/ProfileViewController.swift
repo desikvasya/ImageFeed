@@ -18,9 +18,9 @@ class ProfileViewController: UIViewController {
     private let avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "avatar")
+        imageView.image = UIImage(named: "Avatar")
+        imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 35.0
-        
         return imageView
     }()
     
@@ -61,6 +61,7 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = .ypBlack
         addSubViews()
         applyConstraints()
         
@@ -80,14 +81,14 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    private func updateAvatar() {                                   // 8
-            guard
-                let profileImageURL = profileImageService.avatarURL,
-                let url = URL(string: profileImageURL)
-            else { return }
-        let processor = RoundCornerImageProcessor(cornerRadius: 33)
+    private func updateAvatar() {
+        guard
+            let profileImageUrl = profileImageService.avatarURL,
+            let url = URL(string: profileImageUrl)
+        else { return }
+        let processor = RoundCornerImageProcessor(cornerRadius: 35.0)
         avatarImageView.kf.setImage(with: url, placeholder: UIImage(named: "DefaultAvatar"), options: [.processor(processor)])
-        }
+    }
     
     @objc func didTapLogoutButton() {
         print("didTapLogoutButton")

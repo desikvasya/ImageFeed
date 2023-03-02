@@ -29,6 +29,7 @@
 		92EB0CFF29AF097F007D9660 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 92EB0CFE29AF097F007D9660 /* Kingfisher */; };
 		92EB0D0229AF8B40007D9660 /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 92EB0D0129AF8B40007D9660 /* SwiftKeychainWrapper */; };
 		92EB0D0429B03C52007D9660 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92EB0D0329B03C52007D9660 /* TabBarController.swift */; };
+		92EB0D0629B04502007D9660 /* UIColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92EB0D0529B04502007D9660 /* UIColors.swift */; };
 		92ECFC42297FF76200CA80C4 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92ECFC41297FF76200CA80C4 /* Constants.swift */; };
 		92FFCFC4298F6A3500F63B0C /* Oath2Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FFCFC3298F6A3500F63B0C /* Oath2Service.swift */; };
 		92FFCFC6298F6B5B00F63B0C /* Oath2TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FFCFC5298F6B5B00F63B0C /* Oath2TokenStorage.swift */; };
@@ -58,6 +59,7 @@
 		92D6347B2982ACE4008BF657 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		92E32014299263B000F4E33E /* OauthTokenResponseBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OauthTokenResponseBody.swift; sourceTree = "<group>"; };
 		92EB0D0329B03C52007D9660 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		92EB0D0529B04502007D9660 /* UIColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColors.swift; sourceTree = "<group>"; };
 		92ECFC41297FF76200CA80C4 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		92FFCFC3298F6A3500F63B0C /* Oath2Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Oath2Service.swift; sourceTree = "<group>"; };
 		92FFCFC5298F6B5B00F63B0C /* Oath2TokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Oath2TokenStorage.swift; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 				7D9CFA4D28DDEE8000D971A7 /* LaunchScreen.storyboard */,
 				7D9CFA5028DDEE8000D971A7 /* Info.plist */,
 				92BF40BD2997CD4500A26317 /* Assets.xcassets */,
+				92EB0D0529B04502007D9660 /* UIColors.swift */,
 			);
 			path = "Image Feed";
 			sourceTree = "<group>";
@@ -273,6 +276,7 @@
 				929BA3E029AAF99B005DD7F3 /* Profile.swift in Sources */,
 				92ECFC42297FF76200CA80C4 /* Constants.swift in Sources */,
 				92A0C6C92972AA5E00A1C191 /* SingleImageViewController.swift in Sources */,
+				92EB0D0629B04502007D9660 /* UIColors.swift in Sources */,
 				929BA3E829AC5EBB005DD7F3 /* UserResult.swift in Sources */,
 				92FFCFC6298F6B5B00F63B0C /* Oath2TokenStorage.swift in Sources */,
 				92D6347A2982ACCA008BF657 /* WebViewViewController.swift in Sources */,
