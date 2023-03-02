@@ -28,6 +28,7 @@
 		92E32015299263B000F4E33E /* OauthTokenResponseBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E32014299263B000F4E33E /* OauthTokenResponseBody.swift */; };
 		92EB0CFF29AF097F007D9660 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 92EB0CFE29AF097F007D9660 /* Kingfisher */; };
 		92EB0D0229AF8B40007D9660 /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 92EB0D0129AF8B40007D9660 /* SwiftKeychainWrapper */; };
+		92EB0D0429B03C52007D9660 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92EB0D0329B03C52007D9660 /* TabBarController.swift */; };
 		92ECFC42297FF76200CA80C4 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92ECFC41297FF76200CA80C4 /* Constants.swift */; };
 		92FFCFC4298F6A3500F63B0C /* Oath2Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FFCFC3298F6A3500F63B0C /* Oath2Service.swift */; };
 		92FFCFC6298F6B5B00F63B0C /* Oath2TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FFCFC5298F6B5B00F63B0C /* Oath2TokenStorage.swift */; };
@@ -56,6 +57,7 @@
 		92D634792982ACCA008BF657 /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
 		92D6347B2982ACE4008BF657 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		92E32014299263B000F4E33E /* OauthTokenResponseBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OauthTokenResponseBody.swift; sourceTree = "<group>"; };
+		92EB0D0329B03C52007D9660 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		92ECFC41297FF76200CA80C4 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		92FFCFC3298F6A3500F63B0C /* Oath2Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Oath2Service.swift; sourceTree = "<group>"; };
 		92FFCFC5298F6B5B00F63B0C /* Oath2TokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Oath2TokenStorage.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 				7D9CFA4428DDEE7F00D971A7 /* SceneDelegate.swift */,
 				7D9CFA5A28DDF66900D971A7 /* ImagesList */,
 				92BF40BF2997CD7C00A26317 /* Main.storyboard */,
+				92EB0D0329B03C52007D9660 /* TabBarController.swift */,
 				7D9CFA4D28DDEE8000D971A7 /* LaunchScreen.storyboard */,
 				7D9CFA5028DDEE8000D971A7 /* Info.plist */,
 				92BF40BD2997CD4500A26317 /* Assets.xcassets */,
@@ -277,6 +280,7 @@
 				7D3DFB1528DDF696005A13F3 /* ImagesListCell.swift in Sources */,
 				929BA3E629AC5DB8005DD7F3 /* ProfileImageService.swift in Sources */,
 				929BA3CC299FAE68005DD7F3 /* UIBlockingProgress.swift in Sources */,
+				92EB0D0429B03C52007D9660 /* TabBarController.swift in Sources */,
 				929BA3EA29ADB8BE005DD7F3 /* Alert.swift in Sources */,
 				929BA3CE29A09D4E005DD7F3 /* ProfileService.swift in Sources */,
 			);
