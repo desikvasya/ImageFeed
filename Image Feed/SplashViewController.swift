@@ -24,6 +24,7 @@ final class SplashViewController: UIViewController {
                 self.fetchProfile(token)
             }
         } else {
+            performSegue(withIdentifier: ShowAuthenticationScreenSegueIdentifier, sender: nil)
             let authViewController = AuthViewController()
             authViewController.delegate = self
             authViewController.modalPresentationStyle = .fullScreen

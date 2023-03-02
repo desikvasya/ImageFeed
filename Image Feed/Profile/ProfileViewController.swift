@@ -85,7 +85,7 @@ class ProfileViewController: UIViewController {
                 let profileImageURL = profileImageService.avatarURL,
                 let url = URL(string: profileImageURL)
             else { return }
-        let processor = RoundCornerImageProcessor(cornerRadius: 35)
+        let processor = RoundCornerImageProcessor(cornerRadius: 33)
         avatarImageView.kf.setImage(with: url, placeholder: UIImage(named: "DefaultAvatar"), options: [.processor(processor)])
         }
     
