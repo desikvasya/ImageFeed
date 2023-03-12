@@ -7,15 +7,20 @@
 
 import Foundation
 import UIKit
+import Kingfisher
 
 class ProfileViewController: UIViewController {
+    private let profileService = ProfileService.shared
+    private let profileImageService = ProfileImageService.shared
+    private var profileImageServiceObserver: NSObjectProtocol?
+
     
     private let avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "avatar")
+        imageView.image = UIImage(named: "Avatar")
+        imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 35.0
-        
         return imageView
     }()
     
@@ -56,8 +61,33 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = .ypBlack
         addSubViews()
         applyConstraints()
+        
+        profileImageServiceObserver = NotificationCenter.default    // 2
+                    .addObserver(
+                        forName: ProfileImageService.didChangeNotification, // 3
+                        object: nil,                                        // 4
+                        queue: .main                                        // 5
+                    ) { [weak self] _ in
+                        guard let self = self else { return }
+                        self.updateAvatar()                                 // 6
+                    }
+                updateAvatar()                                              // 7
+        
+        if let profile = profileService.profile {
+            updateProfileDetails(profile: profile)
+        }
+    }
+    
+    private func updateAvatar() {
+        guard
+            let profileImageUrl = profileImageService.avatarURL,
+            let url = URL(string: profileImageUrl)
+        else { return }
+        let processor = RoundCornerImageProcessor(cornerRadius: 35.0)
+        avatarImageView.kf.setImage(with: url, placeholder: UIImage(named: "DefaultAvatar"), options: [.processor(processor)])
     }
     
     @objc func didTapLogoutButton() {
@@ -71,6 +101,13 @@ class ProfileViewController: UIViewController {
         view.addSubview(descriptionLabel)
         view.addSubview(logoutButton)
     }
+    
+    private func updateProfileDetails(profile: Profile) {
+        nameLabel.text = profile.name
+        loginNameLabel.text = profile.loginName
+        descriptionLabel.text = profile.bio
+    }
+    
     
     func applyConstraints() {
         NSLayoutConstraint.activate([
