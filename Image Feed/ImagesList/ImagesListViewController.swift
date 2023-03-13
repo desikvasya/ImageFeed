@@ -91,16 +91,24 @@ extension ImagesListViewController: UITableViewDataSource {
 
 extension ImagesListViewController {
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
+        
+        let url = URL(string: photos[indexPath.row].thumbImageURL)
+
         guard let image = UIImage(named: photosName[indexPath.row]) else {
             return
         }
         
         cell.tableImage.image = image
-        cell.tableDate.text = dateFormatter.string(from: Date())
-        
+        cell.tableDate.text = dateFormatter.string(from: photos[indexPath.row].createdAt ?? Date())
+
         let isLiked = indexPath.row % 2 == 0
         let likeImage = isLiked ? UIImage(named: "like_button_on") : UIImage(named: "like_button_off")
         cell.tableLike.setImage(likeImage, for: .normal)
+        
+        cell.tableImage.kf.indicatorType = .activity
+        cell.tableImage.kf.setImage(with: url, placeholder: UIImage(named: "Stub"), options: [.cacheSerializer(FormatIndicatedCacheSerializer.png)]) { _ in
+            self.tableView.reloadRows(at: [indexPath], with: .automatic)
+        }
     }
 }
 
