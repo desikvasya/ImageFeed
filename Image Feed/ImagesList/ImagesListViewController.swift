@@ -1,7 +1,12 @@
 import UIKit
+import Kingfisher
 
 class ImagesListViewController: UIViewController {
     private let showSingleImageSegueIndetifier = "ShowSingleImage"
+    private let imageListService = ImagesListService.shared
+    private var imageListServiceObserver: NSObjectProtocol?
+    private var photos: [Photo] = []
+
     
     @IBOutlet private var tableView: UITableView!
     
@@ -9,7 +14,22 @@ class ImagesListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        imageListService.fetchPhotosNextPage()
+        photos = imageListService.photos
+        
+        tableView.dataSource = self
+        tableView.delegate = self
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
+        
+        imageListServiceObserver = NotificationCenter.default.addObserver(
+            forName: ImagesListService.didChangeNotification,
+            object: nil,
+            queue: .main,
+            using: { [weak self] _ in
+                guard let self else { return }
+                self.updateTablevViewAnimated()
+            }
+        )
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -29,6 +49,20 @@ class ImagesListViewController: UIViewController {
         formatter.timeStyle = .none
         return formatter
     }()
+    
+    func updateTablevViewAnimated() {
+        let oldCount = photos.count
+        let newCount = imageListService.photos.count
+        photos = imageListService.photos
+        if oldCount != newCount {
+            tableView.performBatchUpdates {
+                let indexPaths = (oldCount..<newCount).map { i in
+                    IndexPath(row: i, section: 0)
+                }
+                tableView.insertRows(at: indexPaths, with: .automatic)
+            } completion: { _ in }
+        }
+    }
 }
 
 extension ImagesListViewController: UITableViewDataSource {
@@ -46,7 +80,14 @@ extension ImagesListViewController: UITableViewDataSource {
         
         return imageListCell
     }
-}
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == photos.count - 1 {
+            imageListService.fetchPhotosNextPage()
+            }
+        }
+    }
+
 
 extension ImagesListViewController {
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
