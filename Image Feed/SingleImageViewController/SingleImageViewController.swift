@@ -8,6 +8,10 @@ import UIKit
 import Foundation
 
 final class SingleImageViewController: UIViewController {
+    
+    var urlImage: URL?
+
+    
     var image: UIImage! {
         didSet {
             guard isViewLoaded else { return }

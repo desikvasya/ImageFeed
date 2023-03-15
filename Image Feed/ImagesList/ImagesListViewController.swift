@@ -10,7 +10,7 @@ class ImagesListViewController: UIViewController {
     
     @IBOutlet private var tableView: UITableView!
     
-    private let photosName: [String] = Array(0...20).map{"\($0)"}
+//    private let photosName: [String] = Array(0...20).map{"\($0)"}
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,10 +34,10 @@ class ImagesListViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == showSingleImageSegueIndetifier {
-            let viewController = segue.destination as! SingleImageViewController
-            let indexPath = sender as! IndexPath
-            let image = UIImage(named: photosName[indexPath.row])
-            viewController.image = image
+            guard let viewController = segue.destination as? SingleImageViewController else { return }
+            guard let indexPath = sender as? IndexPath else { return }
+            let urlString = URL(string: photos[indexPath.row].largeImageURL)
+            viewController.urlImage = urlString
         } else {
             super.prepare(for: segue, sender: sender)
         }
@@ -67,7 +67,7 @@ class ImagesListViewController: UIViewController {
 
 extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return photosName.count
+        return photos.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -90,27 +90,61 @@ extension ImagesListViewController: UITableViewDataSource {
 
 
 extension ImagesListViewController {
+//    func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
+//
+//        let url = URL(string: photos[indexPath.row].thumbImageURL)
+//
+//        guard let image = UIImage(named: photos[indexPath.row]) else {
+//            return
+//        }
+//
+//        cell.tableImage.image = image
+//        cell.tableDate.text = dateFormatter.string(from: photos[indexPath.row].createdAt ?? Date())
+//
+//        let isLiked = indexPath.row % 2 == 0
+//        let likeImage = isLiked ? UIImage(named: "like_button_on") : UIImage(named: "like_button_off")
+//        cell.tableLike.setImage(likeImage, for: .normal)
+//
+//        cell.tableImage.kf.indicatorType = .activity
+//        cell.tableImage.kf.setImage(with: url, placeholder: UIImage(named: "Stub"), options: [.cacheSerializer(FormatIndicatedCacheSerializer.png)]) { _ in
+//            self.tableView.reloadRows(at: [indexPath], with: .automatic)
+//        }
+//    }
+    
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
-        
+//        let gradientCell = CAGradientLayer()
         let url = URL(string: photos[indexPath.row].thumbImageURL)
-
-        guard let image = UIImage(named: photosName[indexPath.row]) else {
-            return
-        }
+//        cell.imageViewCell.layer.addSublayer(gradientCell)
         
-        cell.tableImage.image = image
-        cell.tableDate.text = dateFormatter.string(from: photos[indexPath.row].createdAt ?? Date())
+//        gradientCell.frame = CGRect(origin: .zero, size: CGSize(width: cell.imageViewCell.frame.width, height: cell.imageViewCell.frame.height))
+//        gradientCell.locations = [0, 0.1, 0.3]
+//        gradientCell.colors = [
+//            UIColor(red: 0.682, green: 0.686, blue: 0.706, alpha: 1).cgColor,
+//            UIColor(red: 0.531, green: 0.533, blue: 0.553, alpha: 1).cgColor,
+//            UIColor(red: 0.431, green: 0.433, blue: 0.453, alpha: 1).cgColor
+//        ]
+//        gradientCell.startPoint = CGPoint(x: 0, y: 0.5)
+//        gradientCell.endPoint = CGPoint(x: 1, y: 0.5)
+//        gradientCell.cornerRadius = 16
+//        gradientCell.masksToBounds = true
 
-        let isLiked = indexPath.row % 2 == 0
-        let likeImage = isLiked ? UIImage(named: "like_button_on") : UIImage(named: "like_button_off")
-        cell.tableLike.setImage(likeImage, for: .normal)
-        
+//        let gradientChangeAnimation = CABasicAnimation(keyPath: "locations")
+//        gradientChangeAnimation.duration = 1.0
+//        gradientChangeAnimation.repeatCount = .infinity
+//        gradientChangeAnimation.fromValue = [0, 0.1, 0.3]
+//        gradientChangeAnimation.toValue = [0, 0.8, 1]
+//        gradientCell.add(gradientChangeAnimation, forKey: "cellLocationChange")
+//
         cell.tableImage.kf.indicatorType = .activity
         cell.tableImage.kf.setImage(with: url, placeholder: UIImage(named: "Stub"), options: [.cacheSerializer(FormatIndicatedCacheSerializer.png)]) { _ in
-            self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
         }
+//        cell.dateLabel.text = dateFormatter.string(from: photos[indexPath.row].createdAt ?? Date())
     }
 }
+
+
+
 
 extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
