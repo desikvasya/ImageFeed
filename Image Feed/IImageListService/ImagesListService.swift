@@ -58,5 +58,48 @@ final class ImagesListService {
         lastTask = task
         task.resume()
     }
-
+    
+    func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<LikeResult, Error>) -> Void){
+        assert(Thread.isMainThread)
+        lastTask?.cancel()
+        
+        var request: URLRequest
+        
+        if isLike {
+            request = URLRequest.makeRequest(path: "photos/\(photoId)/like", httpMethod: "POST")
+            request.setValue("Bearer \(OAuth2TokenStorage().token!)", forHTTPHeaderField: "Authorization")
+        }
+        else {
+            request = URLRequest.makeRequest(path: "photos/\(photoId)/like", httpMethod: "DELETE")
+            request.setValue("Bearer \(OAuth2TokenStorage().token!)", forHTTPHeaderField: "Authorization")
+        }
+        
+        let task = urlSession.objectTask(for: request) { [weak self] (result: Result<LikeResult, Error>) in
+            guard let self = self else { return }
+            switch result {
+            case .success(_):
+                if let index = self.photos.firstIndex(where: {$0.id == photoId}){
+                    let photo = self.photos[index]
+                    let newPhoto = Photo(id: photo.id,
+                                         size: photo.size,
+                                         createdAt: photo.createdAt,
+                                         welcomeDescription: photo.welcomeDescription,
+                                         thumbImageURL: photo.thumbImageURL,
+                                         largeImageURL: photo.largeImageURL,
+                                         isLiked: !photo.isLiked)
+                    
+                    // Заменяем элемент в массиве.
+                    DispatchQueue.main.async {
+                        self.photos[index] = newPhoto
+                        completion(result)
+                    }
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                completion(result)
+            }
+        }
+        lastTask = task
+        task.resume()
+    }
 }

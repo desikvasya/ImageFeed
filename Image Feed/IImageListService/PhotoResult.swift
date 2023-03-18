@@ -33,3 +33,7 @@ struct UrlsResult: Codable {
         case largeImageURL = "full"
     }
 }
+
+struct LikePhotoResult: Decodable {
+    let photo: PhotoResult
+}
