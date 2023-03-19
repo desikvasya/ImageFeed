@@ -2,6 +2,7 @@ import UIKit
 import Kingfisher
 
 class ImagesListViewController: UIViewController {
+    
     private let showSingleImageSegueIndetifier = "ShowSingleImage"
     private let imageListService = ImagesListService.shared
     private var imageListServiceObserver: NSObjectProtocol?
@@ -9,6 +10,15 @@ class ImagesListViewController: UIViewController {
 
     
     @IBOutlet private var tableView: UITableView!
+    
+    
+    private lazy var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd.MM.YYYY"
+        formatter.dateStyle = .long
+        formatter.timeStyle = .none
+        return formatter
+    }()
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,12 +51,6 @@ class ImagesListViewController: UIViewController {
         }
     }
     
-    private lazy var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        formatter.timeStyle = .none
-        return formatter
-    }()
     
     func updateTablevViewAnimated() {
         let oldCount = photos.count
@@ -127,34 +131,35 @@ extension ImagesListViewController: UITableViewDataSource {
 
 
 extension ImagesListViewController {
-//    func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
-//
-//        let url = URL(string: photos[indexPath.row].thumbImageURL)
-//
-//        guard let image = UIImage(named: photos[indexPath.row]) else {
-//            return
-//        }
-//
-//        cell.tableImage.image = image
-//        cell.tableDate.text = dateFormatter.string(from: photos[indexPath.row].createdAt ?? Date())
-//
-//
-//        let isLiked = indexPath.row % 2 == 0
-//        let likeImage = isLiked ? UIImage(named: "like_button_on") : UIImage(named: "like_button_off")
-//        cell.tableLike.setImage(likeImage, for: .normal)
-//
-//        cell.tableImage.kf.indicatorType = .activity
-//        cell.tableImage.kf.setImage(with: url, placeholder: UIImage(named: "Stub"), options: [.cacheSerializer(FormatIndicatedCacheSerializer.png)]) { _ in
-//            self.tableView.reloadRows(at: [indexPath], with: .automatic)
-//        }
-//    }
-    
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         cell.delegate = self
         let url = URL(string: photos[indexPath.row].thumbImageURL)
+        let gradientCell = CAGradientLayer()
+        
+        cell.tableImage.layer.addSublayer(gradientCell)
+        
+        gradientCell.frame = CGRect(origin: .zero, size: CGSize(width: cell.tableImage.frame.width, height: cell.tableImage.frame.height))
+        gradientCell.locations = [0, 0.1, 0.3]
+        gradientCell.colors = [
+            UIColor(red: 0.682, green: 0.686, blue: 0.706, alpha: 1).cgColor,
+            UIColor(red: 0.531, green: 0.533, blue: 0.553, alpha: 1).cgColor,
+            UIColor(red: 0.431, green: 0.433, blue: 0.453, alpha: 1).cgColor
+        ]
+        gradientCell.startPoint = CGPoint(x: 0, y: 0.5)
+        gradientCell.endPoint = CGPoint(x: 1, y: 0.5)
+        gradientCell.cornerRadius = 16
+        gradientCell.masksToBounds = true
+
+        let gradientChangeAnimation = CABasicAnimation(keyPath: "locations")
+        gradientChangeAnimation.duration = 1.0
+        gradientChangeAnimation.repeatCount = .infinity
+        gradientChangeAnimation.fromValue = [0, 0.1, 0.3]
+        gradientChangeAnimation.toValue = [0, 0.8, 1]
+        gradientCell.add(gradientChangeAnimation, forKey: "cellLocationChange")
 
         cell.tableImage.kf.indicatorType = .activity
         cell.tableImage.kf.setImage(with: url, placeholder: UIImage(named: "Stub"), options: [.cacheSerializer(FormatIndicatedCacheSerializer.png)]) { _ in
+                    gradientCell.removeFromSuperlayer()
                     self.tableView.reloadRows(at: [indexPath], with: .automatic)
         }
         cell.tableDate.text = dateFormatter.string(from: photos[indexPath.row].createdAt ?? Date())
