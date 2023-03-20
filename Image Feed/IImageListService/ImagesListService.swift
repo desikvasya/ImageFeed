@@ -13,16 +13,20 @@ final class ImagesListService {
     
     private let urlSession = URLSession.shared
     private var lastTask: URLSessionTask? = nil
-    
+    private var nextPage = 0
+
     private (set) var photos: [Photo] = []
     private var lastLoadedPage: Int?
     
     func fetchPhotosNextPage() {
-        assert(Thread.isMainThread)
-        lastTask?.cancel()
+
+        if lastTask != nil { return }
         
-        let nextPage = lastLoadedPage == nil ? 1 : lastLoadedPage! + 1
-        lastLoadedPage = nextPage
+        if let lastLoadedPage {
+                    nextPage = lastLoadedPage + 1
+                } else {
+                    nextPage = 3
+                }
         
         var request = URLRequest.makeRequest(path: "photos?page=\(nextPage)", httpMethod: "GET")
         request.setValue("Bearer \(OAuth2TokenStorage().token!)", forHTTPHeaderField: "Authorization")
