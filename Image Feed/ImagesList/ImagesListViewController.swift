@@ -7,7 +7,7 @@ class ImagesListViewController: UIViewController {
     private let imageListService = ImagesListService.shared
     private var imageListServiceObserver: NSObjectProtocol?
     private var photos: [Photo] = []
-
+    
     
     @IBOutlet private var tableView: UITableView!
     
@@ -19,7 +19,7 @@ class ImagesListViewController: UIViewController {
         formatter.timeStyle = .none
         return formatter
     }()
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         imageListService.fetchPhotosNextPage()
@@ -117,7 +117,6 @@ extension ImagesListViewController: UITableViewDataSource {
         guard let imageListCell = cell as? ImagesListCell else {
             return UITableViewCell()
         }
-        imageListCell.delegate = self
         configCell(for: imageListCell, with: indexPath)
         
         return imageListCell
@@ -125,10 +124,12 @@ extension ImagesListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == photos.count - 1 {
-            imageListService.fetchPhotosNextPage()
+            DispatchQueue.main.async { [self] in
+                imageListService.fetchPhotosNextPage()
             }
         }
     }
+}
 
 
 extension ImagesListViewController {
@@ -150,22 +151,22 @@ extension ImagesListViewController {
         gradientCell.endPoint = CGPoint(x: 1, y: 0.5)
         gradientCell.cornerRadius = 16
         gradientCell.masksToBounds = true
-
+        
         let gradientChangeAnimation = CABasicAnimation(keyPath: "locations")
         gradientChangeAnimation.duration = 1.0
         gradientChangeAnimation.repeatCount = .infinity
         gradientChangeAnimation.fromValue = [0, 0.1, 0.3]
         gradientChangeAnimation.toValue = [0, 0.8, 1]
         gradientCell.add(gradientChangeAnimation, forKey: "cellLocationChange")
-
+        
         cell.tableImage.kf.indicatorType = .activity
         cell.tableImage.kf.setImage(with: url, placeholder: UIImage(named: "Stub"), options: [.cacheSerializer(FormatIndicatedCacheSerializer.png)]) { _ in
-                    gradientCell.removeFromSuperlayer()
-                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
+            gradientCell.removeFromSuperlayer()
+            self.tableView.reloadRows(at: [indexPath], with: .automatic)
         }
         cell.tableDate.text = dateFormatter.string(from: photos[indexPath.row].createdAt ?? Date())
         cell.setIsLiked(isLiked: photos[indexPath.row].isLiked)
-
+        
     }
 }
 
@@ -188,4 +189,5 @@ extension ImagesListViewController: UITableViewDelegate {
         let cellHeight = image.size.height * scale + imageInSets.top + imageInSets.bottom
         return cellHeight
     }
+    
 }

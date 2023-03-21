@@ -14,25 +14,24 @@ final class ImagesListService {
     private let urlSession = URLSession.shared
     private var lastTask: URLSessionTask? = nil
     private var nextPage = 0
-
+    
     private (set) var photos: [Photo] = []
     private var lastLoadedPage: Int?
     
     func fetchPhotosNextPage() {
-
-        if lastTask != nil { return }
+        print(lastLoadedPage as Any)
         
-        if let lastLoadedPage {
-                    nextPage = lastLoadedPage + 1
-                } else {
-                    nextPage = 3
-                }
+        // Проверяем, не выполняется ли уже задача
+        guard lastTask == nil else { return }
+        
+        nextPage += 1
         
         var request = URLRequest.makeRequest(path: "photos?page=\(nextPage)", httpMethod: "GET")
         request.setValue("Bearer \(OAuth2TokenStorage().token!)", forHTTPHeaderField: "Authorization")
+        print(photos.count)
         
         let task = urlSession.objectTask(for: request) { [weak self] (result: Result<Array<PhotoResult>, Error>) in
-            guard let self else { return }
+            guard let self = self else { return }
             switch result {
             case .success(let photoResult):
                 for i in photoResult.indices {
@@ -49,10 +48,11 @@ final class ImagesListService {
                             largeImageURL: photoResult[i].urls.largeImageURL,
                             isLiked: photoResult[i].isLiked))
                 }
-                
+                self.lastLoadedPage = self.nextPage
                 NotificationCenter.default.post (
                     name: ImagesListService.didChangeNotification,
                     object: self)
+                self.lastTask = nil
                 
             case .failure(let error):
                 print(error.localizedDescription)
@@ -60,8 +60,16 @@ final class ImagesListService {
             }
         }
         lastTask = task
+        print(photos.count)
+        print(lastLoadedPage as Any)
+        
         task.resume()
+        
+        // Дожидаемся окончания всех операций в сессии
+        urlSession.finishTasksAndInvalidate()
     }
+    
+    
     
     func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<LikeResult, Error>) -> Void){
         assert(Thread.isMainThread)
