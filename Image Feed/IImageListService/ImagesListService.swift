@@ -19,52 +19,54 @@ final class ImagesListService {
     private var lastLoadedPage: Int?
     
     func fetchPhotosNextPage() {
-        print(lastLoadedPage as Any)
-        
-        // Проверяем, не выполняется ли уже задача
-        guard lastTask == nil else { return }
-        
-        nextPage += 1
-        
-        var request = URLRequest.makeRequest(path: "photos?page=\(nextPage)", httpMethod: "GET")
-        request.setValue("Bearer \(OAuth2TokenStorage().token!)", forHTTPHeaderField: "Authorization")
-        print(photos.count)
-        
-        let task = urlSession.objectTask(for: request) { [weak self] (result: Result<Array<PhotoResult>, Error>) in
-            guard let self = self else { return }
-            switch result {
-            case .success(let photoResult):
-                for i in photoResult.indices {
-                    let createdAt = photoResult[i].createdAt
-                    let dateFormatter = ISO8601DateFormatter()
-                    let date = dateFormatter.date(from: createdAt)
-                    self.photos.append(
-                        Photo(
-                            id: photoResult[i].id,
-                            size: CGSize(width: photoResult[i].width, height: photoResult[i].height),
-                            createdAt: date,
-                            welcomeDescription: photoResult[i].welcomeDescription,
-                            thumbImageURL: photoResult[i].urls.thumbImageURL,
-                            largeImageURL: photoResult[i].urls.largeImageURL,
-                            isLiked: photoResult[i].isLiked))
-                }
-                self.lastLoadedPage = self.nextPage
-                NotificationCenter.default.post (
-                    name: ImagesListService.didChangeNotification,
-                    object: self)
-                self.lastTask = nil
-                
-            case .failure(let error):
-                print(error.localizedDescription)
-                self.lastTask = nil
+            print(lastLoadedPage as Any)
+
+            // Проверяем, не выполняется ли уже задача
+            guard lastTask == nil else { return }
+
+            var request = URLRequest.makeRequest(path: "photos?page=\(nextPage)", httpMethod: "GET")
+            if let token = OAuth2TokenStorage().token {
+                request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
             }
-        }
-        lastTask = task
-        print(photos.count)
-        print(lastLoadedPage as Any)
-        
-        task.resume()
-        
+            print(photos.count)
+
+            let task = urlSession.objectTask(for: request) { [weak self] (result: Result<Array<PhotoResult>, Error>) in
+                guard let self = self else { return }
+                switch result {
+                case .success(let photoResult):
+                    for i in photoResult.indices {
+                        let createdAt = photoResult[i].createdAt
+                        let dateFormatter = ISO8601DateFormatter()
+                        let date = dateFormatter.date(from: createdAt)
+                        self.photos.append(
+                            Photo(
+                                id: photoResult[i].id,
+                                size: CGSize(width: photoResult[i].width, height: photoResult[i].height),
+                                createdAt: date,
+                                welcomeDescription: photoResult[i].welcomeDescription,
+                                thumbImageURL: photoResult[i].urls.thumbImageURL,
+                                largeImageURL: photoResult[i].urls.largeImageURL,
+                                isLiked: photoResult[i].isLiked))
+                    }
+                    self.lastLoadedPage = self.nextPage
+                    self.nextPage += 1 // увеличиваем переменную только при успешной загрузке
+
+                    NotificationCenter.default.post (
+                        name: ImagesListService.didChangeNotification,
+                        object: self)
+                    self.lastTask = nil
+
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    self.lastTask = nil
+                }
+            }
+            lastTask = task
+            print(photos.count)
+            print(lastLoadedPage as Any)
+
+            task.resume()
+
         // Дожидаемся окончания всех операций в сессии
         urlSession.finishTasksAndInvalidate()
     }
