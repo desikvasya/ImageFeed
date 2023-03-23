@@ -90,10 +90,6 @@ class ProfileViewController: UIViewController {
         avatarImageView.kf.setImage(with: url, placeholder: UIImage(named: "DefaultAvatar"), options: [.processor(processor)])
     }
     
-    @objc func didTapLogoutButton() {
-        print("didTapLogoutButton")
-    }
-    
     func addSubViews() {
         view.addSubview(avatarImageView)
         view.addSubview(nameLabel)
@@ -106,6 +102,26 @@ class ProfileViewController: UIViewController {
         nameLabel.text = profile.name
         loginNameLabel.text = profile.loginName
         descriptionLabel.text = profile.bio
+    }
+    
+    
+    @objc func didTapLogoutButton() {
+        let alert = UIAlertController(
+            title: "Выйти из профиля",
+            message: "Уверены, что хотите выйти?",
+            preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { _ in
+            OAuth2TokenStorage().token = nil
+            WebCacheCleaner.clean()
+            guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration")}
+            let splashViewController = SplashViewController()
+            window.rootViewController = splashViewController
+        })
+        )
+        alert.addAction(UIAlertAction(title: "Нет", style: .default, handler: { _ in
+            alert.dismiss(animated: true)
+        }))
+        present(alert, animated: true)
     }
     
     

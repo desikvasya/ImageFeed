@@ -14,3 +14,5 @@ struct Constants {
     static let defaultBaseUrl = URL(string: "https://api.unsplash.com")!
     static let unsplashAuthorizeURLString = "https://unsplash.com/oauth/authorize"
 }
+
+public struct LikeResult: Decodable {}
