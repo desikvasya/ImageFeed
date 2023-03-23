@@ -1,13 +1,40 @@
 import UIKit
 import Kingfisher
 
-class ImagesListViewController: UIViewController {
+protocol ImagesListViewControllerProtocol: AnyObject {
+   var presenter: ImagesListPresenterProtocol? { get set }
+   var photos: [Photo] { get set }
+   func updateTableViewAnimated(photos: [Photo])
+}
+
+final class ImagesListViewController: UIViewController, ImagesListViewControllerProtocol {
+    func updateTableViewAnimated(photos: [Photo]) {
+        let oldCount = photos.count
+        let newCount = imageListService.photos.count
+        self.photos = imageListService.photos
+        if oldCount != newCount {
+            tableView.performBatchUpdates {
+                let indexPaths = (oldCount..<newCount).map { i in
+                    IndexPath(row: i, section: 0)
+                }
+                tableView.insertRows(at: indexPaths, with: .automatic)
+            } completion: { _ in }
+        }
+    }
+    
+
     
     private let showSingleImageSegueIndetifier = "ShowSingleImage"
     private let imageListService = ImagesListService.shared
     private var imageListServiceObserver: NSObjectProtocol?
-    private var photos: [Photo] = []
+    internal var photos: [Photo] = []
+    var presenter: ImagesListPresenterProtocol?
+
     
+    func configure(_ presenter: ImagesListPresenterProtocol) {
+        self.presenter = presenter
+        self.presenter?.view = self
+    }
     
     @IBOutlet private var tableView: UITableView!
     

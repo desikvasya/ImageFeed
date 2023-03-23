@@ -73,7 +73,7 @@ final class ImagesListService {
     
     
     
-    func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<LikeResult, Error>) -> Void){
+    func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<LikePhotoResult, Error>) -> Void){
         assert(Thread.isMainThread)
         lastTask?.cancel()
         
@@ -92,7 +92,7 @@ final class ImagesListService {
             }
         }
         
-        let task = urlSession.objectTask(for: request) { [weak self] (result: Result<LikeResult, Error>) in
+        let task = urlSession.objectTask(for: request) { [weak self] (result: Result<LikePhotoResult, Error>) in
             guard let self = self else { return }
             switch result {
             case .success(_):

@@ -8,7 +8,7 @@
 import UIKit
 
 protocol AuthViewControllerDelegate: AnyObject {
-    func authViewController(_vc: AuthViewController, didAuthenticateWithCode code: String)
+    func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String)
 }
 
 final class AuthViewController: UIViewController {
@@ -18,8 +18,10 @@ final class AuthViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        loginButton.addTarget(self, action: #selector(loginButtonTap), for: .touchUpInside)
+        
         view.backgroundColor = .ypBlack
-        UIBlockingProgressHUD.dismiss()
+//        UIBlockingProgressHUD.dismiss()
         addSubviews()
         applyConstraints()
     }
@@ -27,6 +29,10 @@ final class AuthViewController: UIViewController {
     private func switchWebView() {
         let webViewController = WebViewViewController()
         webViewController.delegate = self
+        let authHelper = AuthHelper()
+        let webViewPresenter = WebViewPresenter(authHelper: authHelper)
+        webViewController.presenter = webViewPresenter
+        webViewPresenter.view = webViewController
         webViewController.modalPresentationStyle = .fullScreen
         present(webViewController, animated: true)
     }
@@ -34,7 +40,7 @@ final class AuthViewController: UIViewController {
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "auth_screen_logo")
+        imageView.image = UIImage(named: "VectorAuth")
         
         return imageView
     }()
@@ -48,7 +54,8 @@ final class AuthViewController: UIViewController {
         button.backgroundColor = .ypWhite
         button.clipsToBounds = true
         button.layer.cornerRadius = 16
-        button.addTarget(self, action: #selector(loginButtonTap), for: .touchUpInside)
+        button.accessibilityIdentifier = "Authenticate"
+        
         return button
     }()
     
@@ -79,7 +86,7 @@ final class AuthViewController: UIViewController {
 
 extension AuthViewController: WebViewViewControllerDelegate {
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
-        delegate?.authViewController(_vc: self, didAuthenticateWithCode: code)
+        delegate?.authViewController(self, didAuthenticateWithCode: code)
     }
 
     func webViewViewControllerDidCancel(_ vc: WebViewViewController) {
