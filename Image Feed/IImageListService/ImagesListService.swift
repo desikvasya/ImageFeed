@@ -81,11 +81,15 @@ final class ImagesListService {
         
         if isLike {
             request = URLRequest.makeRequest(path: "photos/\(photoId)/like", httpMethod: "POST")
-            request.setValue("Bearer \(OAuth2TokenStorage().token!)", forHTTPHeaderField: "Authorization")
+            if let token = OAuth2TokenStorage().token {
+                request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            } 
         }
         else {
             request = URLRequest.makeRequest(path: "photos/\(photoId)/like", httpMethod: "DELETE")
-            request.setValue("Bearer \(OAuth2TokenStorage().token!)", forHTTPHeaderField: "Authorization")
+            if let token = OAuth2TokenStorage().token {
+                request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            }
         }
         
         let task = urlSession.objectTask(for: request) { [weak self] (result: Result<LikeResult, Error>) in

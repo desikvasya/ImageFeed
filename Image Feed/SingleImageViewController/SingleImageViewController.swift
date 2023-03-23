@@ -69,8 +69,8 @@ final class SingleImageViewController: UIViewController {
             preferredStyle: .alert
         )
         alert.addAction(UIAlertAction(title: "Не надо", style: .cancel))
-        alert.addAction(UIAlertAction(title: "Повтороить", style: .default, handler: { _ in
-            guard let urlImage = self.urlImage else { return }
+        alert.addAction(UIAlertAction(title: "Повторить", style: .default, handler: { [weak self] _ in
+            guard let self = self, let urlImage = self.urlImage else { return }
             self.setImage(url: urlImage)
         }))
         self.present(alert, animated: true)
