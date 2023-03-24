@@ -69,6 +69,8 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "logout_button"), for: .normal)
         button.addTarget(self, action: #selector(didTapLogoutButton), for: .touchUpInside)
+        button.accessibilityIdentifier = "logoutButton"
+
         return button
     }()
     
@@ -120,7 +122,7 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     
     @objc func didTapLogoutButton() {
         let alert = UIAlertController(
-            title: "Выйти из профиля",
+            title: "Пока, пока!",
             message: "Уверены, что хотите выйти?",
             preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { _ in
