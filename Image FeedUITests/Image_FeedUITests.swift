@@ -5,7 +5,7 @@
 //  Created by Denis on 23.03.2023.
 //
 
-
+@testable import Image_Feed
 import XCTest
 
 final class ImageFeedUITests: XCTestCase {
@@ -92,9 +92,9 @@ final class ImageFeedUITests: XCTestCase {
         sleep(3)
         
         // check labels
-        XCTAssertTrue(app.staticTexts["Vyacheslav Shestakov"].exists)
+        XCTAssertTrue(app.staticTexts["Denis Korostelev"].exists)
         sleep(2)
-        XCTAssertTrue(app.staticTexts["@zlavok322"].exists)
+        XCTAssertTrue(app.staticTexts["@desikvasya"].exists)
         sleep(2)
         let logoutButton = app.buttons["logoutButton"]
         sleep(5)

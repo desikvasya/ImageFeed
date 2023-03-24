@@ -10,16 +10,16 @@ import XCTest
 
 final class ImageListViewTests: XCTestCase {
     
-//    func testPresenterViewDidLoad() {
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let viewController = storyboard.instantiateViewController(withIdentifier: "ImagesListViewController") as! ImagesListViewController
-//        let presenter = ImagesListPresenterSpy()
-//        viewController.configure(presenter)
-//        
-//        _ = viewController.view
-//        
-//        XCTAssertTrue(presenter.viewDidLoadCalled)
-//    }
+    func testPresenterViewDidLoad() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "ImagesListViewController") as! ImagesListViewController
+        let presenter = ImagesListPresenterSpy()
+        viewController.configure(presenter)
+        
+        _ = viewController.view
+
+        XCTAssertTrue(presenter.viewDidLoadCalled)
+    }
 
     
     func testAddPhotos() {

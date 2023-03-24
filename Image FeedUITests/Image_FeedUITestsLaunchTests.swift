@@ -5,6 +5,7 @@
 //  Created by Denis on 23.03.2023.
 //
 
+@testable import Image_Feed
 import XCTest
 
 final class Image_FeedUITestsLaunchTests: XCTestCase {

@@ -7,11 +7,11 @@ final class ProfileViewTests: XCTestCase {
         let presenter = ProfilePresenterSpy()
         let viewController = ProfileViewController()
         viewController.presenter = presenter
-        
-        viewController.viewDidLoad()
+        viewController.loadViewIfNeeded()
 
         XCTAssertTrue(presenter.viewDidLoadCalled)
     }
+
     
     func testPresenterCallsUpdates() {
         let viewController = ProfileViewControllerSpy()
