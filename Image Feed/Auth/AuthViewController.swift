@@ -17,11 +17,10 @@ final class AuthViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         loginButton.addTarget(self, action: #selector(loginButtonTap), for: .touchUpInside)
         
         view.backgroundColor = .ypBlack
-//        UIBlockingProgressHUD.dismiss()
+        UIBlockingProgressHUD.dismiss()
         addSubviews()
         applyConstraints()
     }
@@ -47,6 +46,7 @@ final class AuthViewController: UIViewController {
     
     private let loginButton: UIButton = {
         let button = UIButton()
+        button.accessibilityIdentifier = "Authenticate"
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Войти", for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
@@ -54,7 +54,6 @@ final class AuthViewController: UIViewController {
         button.backgroundColor = .ypWhite
         button.clipsToBounds = true
         button.layer.cornerRadius = 16
-        button.accessibilityIdentifier = "Authenticate"
         
         return button
     }()

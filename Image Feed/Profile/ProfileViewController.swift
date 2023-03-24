@@ -76,6 +76,12 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter?.viewDidLoad()
+        if let presenter = presenter {
+                   print("Presenter is set:", presenter)
+               } else {
+                   print("Presenter is nil")
+               }
         self.view.backgroundColor = .ypBlack
         addSubViews()
         applyConstraints()

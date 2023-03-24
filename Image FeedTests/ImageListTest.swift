@@ -16,10 +16,12 @@ final class ImageListViewTests: XCTestCase {
         let presenter = ImagesListPresenterSpy()
         viewController.configure(presenter)
         
-        _ = viewController.view
-
+        // Trigger viewDidLoad
+        viewController.loadViewIfNeeded()
+        
         XCTAssertTrue(presenter.viewDidLoadCalled)
     }
+
 
     
     func testAddPhotos() {

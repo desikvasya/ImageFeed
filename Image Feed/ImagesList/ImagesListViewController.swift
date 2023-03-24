@@ -49,6 +49,7 @@ final class ImagesListViewController: UIViewController, ImagesListViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter?.viewDidLoad()
         imageListService.fetchPhotosNextPage()
         photos = imageListService.photos
         
