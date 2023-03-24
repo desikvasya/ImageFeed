@@ -10,16 +10,19 @@ protocol ProfilePresenterProtocol {
 
 final class ProfilePresenter: ProfilePresenterProtocol {
     var profileService: ProfileService
-    init(profileService: ProfileService) {
-            self.profileService = profileService
-        }
     
-    //MARK: - Properties
+    init(profileService: ProfileService) {
+        self.profileService = profileService
+    }
+    
+    // MARK: - Properties
+    
     weak var view: ProfileViewControllerProtocol?
     
     private var profileImageServiceObserver: NSObjectProtocol?
     
     func viewDidLoad() {
+        print("ProfilePresenter - viewDidLoad()")
         checkProfile()
         loadProfileImageURL()
     }
@@ -54,3 +57,4 @@ final class ProfilePresenter: ProfilePresenterProtocol {
         WebCacheCleaner.clean()
     }
 }
+

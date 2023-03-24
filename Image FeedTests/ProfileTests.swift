@@ -4,13 +4,12 @@ import XCTest
 final class ProfileViewTests: XCTestCase {
     
     func testViewControllerCallsViewDidLoad() {
-        let viewController = ProfileViewController()
         let presenter = ProfilePresenterSpy()
+        let viewController = ProfileViewController()
         viewController.presenter = presenter
-        presenter.view = viewController
         
-        _ = viewController.view
-        
+        viewController.viewDidLoad()
+
         XCTAssertTrue(presenter.viewDidLoadCalled)
     }
     
