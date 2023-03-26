@@ -40,9 +40,9 @@ final class ImageFeedUITests: XCTestCase {
         
         loginTextField.tap()
         loginTextField.typeText("desikvasya1@gmail.com")
-        sleep(5)
-        webView.tap()
-        
+        app.toolbars.buttons["Done"].tap()
+
+
         print(app.debugDescription)
         
         let loginButton = webView.descendants(matching: .button).element
