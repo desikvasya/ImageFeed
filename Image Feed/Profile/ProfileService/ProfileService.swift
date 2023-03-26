@@ -35,7 +35,7 @@ public final class ProfileService {
                 self.profile = profile
                 completion(.success(body))
             case .failure:
-                completion(.failure(print("error") as! Error))
+                completion(.failure(NetworkError.urlSessionError))
             }
         }
         task.resume()
