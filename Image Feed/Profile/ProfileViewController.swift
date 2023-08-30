@@ -5,14 +5,27 @@
 //  Created by Denis on 10.01.2023.
 //
 
-import Foundation
+
 import UIKit
 import Kingfisher
 
-class ProfileViewController: UIViewController {
+protocol ProfileViewControllerProtocol: AnyObject {
+    var presenter: ProfilePresenterProtocol? { get set }
+    func updateProfileDetails(profile: Profile)
+    func updateAvatar(url: URL)
+}
+
+
+class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
+    func updateAvatar(url: URL) {
+        
+    }
+    
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
     private var profileImageServiceObserver: NSObjectProtocol?
+    var presenter: ProfilePresenterProtocol?
+
 
     
     private let avatarImageView: UIImageView = {
@@ -56,11 +69,19 @@ class ProfileViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "logout_button"), for: .normal)
         button.addTarget(self, action: #selector(didTapLogoutButton), for: .touchUpInside)
+        button.accessibilityIdentifier = "logoutButton"
+
         return button
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter?.viewDidLoad()
+        if let presenter = presenter {
+                   print("Presenter is set:", presenter)
+               } else {
+                   print("Presenter is nil")
+               }
         self.view.backgroundColor = .ypBlack
         addSubViews()
         applyConstraints()
@@ -98,7 +119,7 @@ class ProfileViewController: UIViewController {
         view.addSubview(logoutButton)
     }
     
-    private func updateProfileDetails(profile: Profile) {
+    internal func updateProfileDetails(profile: Profile) {
         nameLabel.text = profile.name
         loginNameLabel.text = profile.loginName
         descriptionLabel.text = profile.bio
@@ -107,7 +128,7 @@ class ProfileViewController: UIViewController {
     
     @objc func didTapLogoutButton() {
         let alert = UIAlertController(
-            title: "Выйти из профиля",
+            title: "Пока, пока!",
             message: "Уверены, что хотите выйти?",
             preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { _ in
@@ -144,4 +165,5 @@ class ProfileViewController: UIViewController {
         ])
     }
 }
+
 
